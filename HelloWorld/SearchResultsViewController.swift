@@ -16,7 +16,7 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
     // MARK: properties
     var tableData = []
     var api = APIControler()
-    
+    var imageCache = [String:UIImage]()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.    
@@ -35,40 +35,84 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         return tableData.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        // 相当于创建了一个cell，identifier为MyTestCell；
-        // 和FoodTracker中在IB中创建cell prototype不同，那种cell要通过tableView.dequeueReusableCellWithIdentifier(_:forIndexPath:)获得，然后转化成我们需要的类型(as! MealTableViewCell)
-        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "MyTestCell")
-        
-        if let rowData = tableData[indexPath.row] as? NSDictionary,
+        // 相当于创建了一个cell，identifier为MyTestCell；每次scroll都有要创建一个新cell，效率低而且浪费内存！
+//        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "MyTestCell")
+        // 这种方式更快更省
+        let kCellIdentifier = "SearchResultCell"
+        let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier)!
+        if let rowData: NSDictionary = self.tableData[indexPath.row] as? NSDictionary,
+            // Grab the artworkUrl60 key to get an image URL for the app's thumbnail
             urlString = rowData["artworkUrl60"] as? String,
-            // Create an NSURL instance from the String URL we get from the API
             imgURL = NSURL(string: urlString),
-            // Download an NSData representation of the image at the URL
-            imgData = NSData(contentsOfURL: imgURL),
             // Get the formatted price string for display in the subtitle
             formattedPrice = rowData["formattedPrice"] as? String,
             // Get the track name
             description = rowData["description"] as? String {
                 // Get the formatted price string for display in the subtitle
                 cell.detailTextLabel?.text = formattedPrice
-                // Update the imageView cell to use the downloaded image data
-                cell.imageView?.image = UIImage(data: imgData)
                 // Update the textLabel text to use the trackName from the API
-                // 系统会默认做这种事情，此处就是练习
-                var text : String
-                if description.characters.count > 30 {
-                    text = description.substringToIndex(description.startIndex.advancedBy(30)) + "..."
-                } else {
-                    text = description
+                cell.textLabel?.text = description
+                
+                // Start by setting the cell's image to a static file
+                // Without this, we will end up without an image view!
+                cell.imageView?.image = UIImage(named: "Blank")
+                print("image url:", urlString)
+                // If this image is already cached, don't re-download
+                if let img = imageCache[urlString] {
+                    cell.imageView?.image = img
                 }
-                cell.textLabel?.text = text
-                print("description:", text)
+                else {
+                    // The image isn't cached, download the img data
+                    // We should perform this in a background thread
+                    let mainQueue = NSOperationQueue.mainQueue()
+                    let session = NSURLSession(configuration:
+                        NSURLSessionConfiguration.defaultSessionConfiguration(),
+                        delegate: nil, delegateQueue: mainQueue)
+                    let task =
+                        session.dataTaskWithURL(imgURL, completionHandler: { (data, response, error) -> Void in
+                        if error == nil {
+                            print("image task done")
+                            if let resp = response as? NSHTTPURLResponse {
+                                print("got image url:", resp.URL)
+                            }
+                            // Convert the downloaded data in to a UIImage object
+                            let image = UIImage(data: data!)
+                            // Store the image in to our cache
+                            self.imageCache[urlString] = image
+                            // Update the cell
+                            dispatch_async(dispatch_get_main_queue(), {
+                                if let cellToUpdate = tableView.cellForRowAtIndexPath(indexPath) {
+                                    cellToUpdate.imageView?.image = image
+                                }
+                            })
+                        }
+                        else {
+                            print("Error: \(error!.localizedDescription)")
+                        }
+                    })
+                    task.resume()
+                }
+                
         }
         return cell
     }
-    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        // Get the row data for the selected row
+        if let rowData = self.tableData[indexPath.row] as? NSDictionary,
+            // Get the name of the track for this row
+            description = rowData["description"] as? String,
+            // Get the price of the track on this row
+            formattedPrice = rowData["formattedPrice"] as? String {
+                let name =  description.substringToIndex(description.startIndex.advancedBy(20)) + " | " + formattedPrice
+                let alert = UIAlertController(title: name, message: description, preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
     // MARK: api delegate
     func didReceiveData(ary: NSArray) {
+        // 必须放到独立线程中，否则报错
+        // This application is modifying the autolayout engine from a background thread, which can lead to engine corruption and weird crashes.  This will cause an exception in a future release
         dispatch_async(dispatch_get_main_queue(), {
             self.tableData = ary
             self.appsTableView.reloadData()
