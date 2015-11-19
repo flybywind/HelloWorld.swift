@@ -28,11 +28,14 @@ class DetailsViewController: UIViewController {
         titleLabel.text = json?.title
         descriptText.text = json?.description
         if let imagUrl = json?.largeImageURL {
-            if let data = NSData(contentsOfFile: imagUrl) {
-                print("get large image url:", json?.largeImageURL)
-                coverImage.image = UIImage(data: data)
-            }
+            dispatch_async(dispatch_get_main_queue(), {
+                if let data = NSData(contentsOfURL: NSURL(string:imagUrl)!) {
+                    print("get large image url:", imagUrl)
+                    self.coverImage.image = UIImage(data: data)
+                } else {
+                    print("get image failed!")
+                }
+            })
         }
-//        coverImage.image = UIImage(data: NSData(contentsOfFile: (json?.largeImageURL)!)!)
     }
 }
