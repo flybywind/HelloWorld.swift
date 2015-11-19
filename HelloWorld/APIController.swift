@@ -13,8 +13,11 @@ protocol APIControllerProtocol {
 }
 
 class APIControler {
-    var delegate : APIControllerProtocol!
+    var delegate : APIControllerProtocol
     
+    init(delegate: APIControllerProtocol) {
+        self.delegate = delegate
+    }
     // MARK: methods
     func searchItunesFor(searchTerm: String) {
         // The iTunes API wants multiple terms separated by + symbols, so replace spaces with + signs

@@ -14,6 +14,8 @@
 		4019C5AB1BF9C8070076E33A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4019C5A91BF9C8070076E33A /* LaunchScreen.storyboard */; };
 		4019C5B61BF9C8080076E33A /* HelloWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4019C5B51BF9C8080076E33A /* HelloWorldTests.swift */; };
 		4019C5C11BFC743D0076E33A /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4019C5C01BFC743D0076E33A /* APIController.swift */; };
+		4019C5C31BFD8FC40076E33A /* ITunesJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4019C5C21BFD8FC40076E33A /* ITunesJson.swift */; };
+		4019C5C51BFDA4230076E33A /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4019C5C41BFDA4230076E33A /* DetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,8 @@
 		4019C5B51BF9C8080076E33A /* HelloWorldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloWorldTests.swift; sourceTree = "<group>"; };
 		4019C5B71BF9C8080076E33A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4019C5C01BFC743D0076E33A /* APIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
+		4019C5C21BFD8FC40076E33A /* ITunesJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITunesJson.swift; sourceTree = "<group>"; };
+		4019C5C41BFDA4230076E33A /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,8 @@
 			children = (
 				4019C5A01BF9C8070076E33A /* AppDelegate.swift */,
 				4019C5A21BF9C8070076E33A /* SearchResultsViewController.swift */,
+				4019C5C41BFDA4230076E33A /* DetailsViewController.swift */,
+				4019C5C21BFD8FC40076E33A /* ITunesJson.swift */,
 				4019C5C01BFC743D0076E33A /* APIController.swift */,
 				4019C5A41BF9C8070076E33A /* Main.storyboard */,
 				4019C5A71BF9C8070076E33A /* Assets.xcassets */,
@@ -201,8 +207,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4019C5A31BF9C8070076E33A /* SearchResultsViewController.swift in Sources */,
+				4019C5C31BFD8FC40076E33A /* ITunesJson.swift in Sources */,
 				4019C5A11BF9C8070076E33A /* AppDelegate.swift in Sources */,
 				4019C5C11BFC743D0076E33A /* APIController.swift in Sources */,
+				4019C5C51BFDA4230076E33A /* DetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
