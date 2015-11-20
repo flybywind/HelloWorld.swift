@@ -19,7 +19,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
     var json: ITunesJson?
     var tracks = [Track]()
     var mediaPlayer = MPMoviePlayerController()
-    var backgroundQueue: dispatch_queue_t?
+//    var backgroundQueue: dispatch_queue_t?
     var tabedIdx : NSIndexPath?
     // 和SearchResultsViewController类似，这里也是为了防止循环依赖，因为viewcontroller需要api对象，
     // 但是，api对象的初始化又需要view controller作为其delegate传入。
@@ -65,13 +65,13 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
         return tracks.count
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        if (backgroundQueue == nil) {
-            // 必须防止main queue里面，放在其他队列中没声音
-            backgroundQueue = dispatch_get_main_queue()
-        }
-        dispatch_async(backgroundQueue!, {
+//        if (backgroundQueue == nil) {
+//            // 必须放在main queue里面，放在其他队列中没声音
+//            backgroundQueue = dispatch_get_main_queue()
+//        }
+//        dispatch_async(backgroundQueue!, {
             self.mediaPlayer.stop()
-        })
+//        })
 
         var curIndx : NSIndexPath?
         if (tabedIdx == nil || tabedIdx!.row != indexPath.row) {
@@ -79,10 +79,11 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
             if let cell = tableView.cellForRowAtIndexPath(indexPath) as? TrackCell {
                 cell.playIcon.text = "🔳"
             }
-            dispatch_async(backgroundQueue!, {
+//            没啥用
+//            dispatch_async(backgroundQueue!, {
                 self.mediaPlayer.contentURL = NSURL(string: track.previewUrl)
                 self.mediaPlayer.play()
-            })
+//            })
             
             curIndx = indexPath
         }
@@ -93,6 +94,12 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
             }
         }
         tabedIdx = curIndx
+    }
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
+        UIView.animateWithDuration(0.25, animations: {
+            cell.layer.transform = CATransform3DMakeScale(1,1,1)
+        })
     }
     func didReceiveData(ary: NSArray) {
         dispatch_async(dispatch_get_main_queue(), {
