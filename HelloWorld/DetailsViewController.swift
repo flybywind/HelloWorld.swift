@@ -15,7 +15,6 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var coverImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    @IBOutlet weak var descriptText: UITextView!
     var json: ITunesJson?
     
     required init?(coder aDecoder: NSCoder) {
@@ -26,11 +25,10 @@ class DetailsViewController: UIViewController {
         super.viewDidLoad()
         
         titleLabel.text = json?.title
-        descriptText.text = json?.description
         if let imagUrl = json?.largeImageURL {
             dispatch_async(dispatch_get_main_queue(), {
                 if let data = NSData(contentsOfURL: NSURL(string:imagUrl)!) {
-                    print("get large image url:", imagUrl)
+//                    print("get large image url:", imagUrl)
                     self.coverImage.image = UIImage(data: data)
                 } else {
                     print("get image failed!")

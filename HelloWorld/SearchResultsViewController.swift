@@ -47,7 +47,7 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         // Get the formatted price string for display in the subtitle
         cell.detailTextLabel?.text = json.price
         // Update the textLabel text to use the trackName from the API
-        cell.textLabel?.text = json.description
+        cell.textLabel?.text = json.title
         
         // Start by setting the cell's image to a static file
         // Without this, we will end up without an image view!

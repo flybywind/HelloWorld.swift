@@ -10,20 +10,22 @@ import Foundation
 
 struct ITunesJson {
     let title,
-        description,
         price,
         thumbnailImageURL,
         largeImageURL,
+        artistURL,
         itemURL: String
-
-    init(title:String, description:String, price:String,
-        thumbnailImageUrl:String, largeImageUrl:String, itemUrl:String) {
+    let collectionId: Int
+    
+    init(title:String, id:Int, price:String,
+        thumbnailImageUrl:String, largeImageUrl:String, itemUrl:String, artistUrl:String) {
         self.title = title
-        self.description = description
         self.price = price
         self.thumbnailImageURL = thumbnailImageUrl
         self.largeImageURL = largeImageUrl
-        self.itemURL = itemUrl 
+        self.itemURL = itemUrl
+        self.artistURL = artistUrl
+        self.collectionId = id
     }
     static func iTunesWithJSON(results: NSArray) -> [ITunesJson] {
         // Create an empty array of Albums to append to from this list
@@ -32,16 +34,39 @@ struct ITunesJson {
         if results.count > 0 {
             // Sometimes iTunes returns a collection, not a track, so we check both for the 'name'
             for result in results {
-                let name = result["trackCensoredName"] as? String ?? "default"
+                var name = result["trackName"] as? String
+                if name == nil {
+                    name = result["collectionName"] as? String ?? "no name"
+                }
+                
                 // Sometimes price comes in as formattedPrice, sometimes as collectionPrice.. and sometimes it's a float instead of a string. Hooray!
-                let price = result["formattedPrice"] as? String ?? "XXX"
-                let description = result["description"] as? String ?? "default description"
+                var price = result["formattedPrice"] as? String
+                if price == nil {
+                    price = result["collectionPrice"] as? String
+                    if price == nil {
+                        let priceFloat = result["collectionPrice"] as? Float
+                        let nf = NSNumberFormatter()
+                        nf.maximumFractionDigits = 2
+                        if priceFloat != nil {
+                            price = "$\(nf.stringFromNumber(priceFloat!)!)"
+                        }
+                    }
+                }
+                
                 let thumbnailURL = result["artworkUrl60"] as? String ?? ""
                 let imageURL = result["artworkUrl100"] as? String ?? ""
-                let itemURL = result["collectionViewUrl"] as? String ?? ""
+                let artistURL = result["artistViewUrl"] as? String ?? ""
                 
-                json.append(ITunesJson(title: name, description: description, price: price, thumbnailImageUrl: thumbnailURL, largeImageUrl: imageURL, itemUrl: itemURL))
-                
+                var itemURL = result["collectionViewUrl"] as? String
+                if itemURL == nil {
+                    itemURL = result["trackViewUrl"] as? String ?? ""
+                }
+
+                if let collectionId = result["collectionId"] as? Int {
+                    json.append(ITunesJson(title: name!, id: collectionId, price: price!, thumbnailImageUrl: thumbnailURL, largeImageUrl: imageURL, itemUrl: itemURL!, artistUrl: artistURL))
+                } else {
+                    print("can't find collection id")
+                }
             }
         }
         return json
