@@ -25,6 +25,7 @@ class APIControler {
         let task =
         session.dataTaskWithURL(url!, completionHandler: {data, response, error -> Void in
             print("Task completed")
+
             if (error != nil)  {
                 // If there is an error in the web request, print it to the console
                 print(error!.localizedDescription)
@@ -60,5 +61,8 @@ class APIControler {
 
             get(urlPath)
         }
+    }
+    func lookupAlbum(collectionId: Int) {
+        get("https://itunes.apple.com/lookup?id=\(collectionId)&entity=song")
     }
 }

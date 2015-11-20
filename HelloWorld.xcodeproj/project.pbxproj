@@ -16,6 +16,7 @@
 		4019C5C11BFC743D0076E33A /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4019C5C01BFC743D0076E33A /* APIController.swift */; };
 		4019C5C31BFD8FC40076E33A /* ITunesJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4019C5C21BFD8FC40076E33A /* ITunesJson.swift */; };
 		4019C5C51BFDA4230076E33A /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4019C5C41BFDA4230076E33A /* DetailsViewController.swift */; };
+		4019C5C71BFEEE760076E33A /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4019C5C61BFEEE760076E33A /* Track.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		4019C5C01BFC743D0076E33A /* APIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
 		4019C5C21BFD8FC40076E33A /* ITunesJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITunesJson.swift; sourceTree = "<group>"; };
 		4019C5C41BFDA4230076E33A /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		4019C5C61BFEEE760076E33A /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				4019C5A01BF9C8070076E33A /* AppDelegate.swift */,
 				4019C5A21BF9C8070076E33A /* SearchResultsViewController.swift */,
 				4019C5C41BFDA4230076E33A /* DetailsViewController.swift */,
+				4019C5C61BFEEE760076E33A /* Track.swift */,
 				4019C5C21BFD8FC40076E33A /* ITunesJson.swift */,
 				4019C5C01BFC743D0076E33A /* APIController.swift */,
 				4019C5A41BF9C8070076E33A /* Main.storyboard */,
@@ -211,6 +214,7 @@
 				4019C5A11BF9C8070076E33A /* AppDelegate.swift in Sources */,
 				4019C5C11BFC743D0076E33A /* APIController.swift in Sources */,
 				4019C5C51BFDA4230076E33A /* DetailsViewController.swift in Sources */,
+				4019C5C71BFEEE760076E33A /* Track.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,21 +8,26 @@
 
 import UIKit
 
-class SearchResultsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, APIControllerProtocol {
+class SearchResultsViewController: UIViewController,
+    UITableViewDataSource,
+    UITableViewDelegate,
+    APIControllerProtocol {
 
     // MARK: outlet
     @IBOutlet var appsTableView : UITableView!
     
     // MARK: properties
     var tableData = [ITunesJson]()
-    var api: APIControler!
+//    var api: APIControler!
+    var api:APIControler!
     var imageCache = [String:UIImage]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.    
+        // Do any additional setup after loading the view, typically from a nib.   
         api = APIControler(delegate: self)
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        api.searchItunesFor("image resize")
+        api.searchItunesFor("Bob Dylan")
     }
 
     override func didReceiveMemoryWarning() {
@@ -122,6 +127,7 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         // 必须放到独立线程中，否则报错
         // This application is modifying the autolayout engine from a background thread, which can lead to engine corruption and weird crashes.  This will cause an exception in a future release
         dispatch_async(dispatch_get_main_queue(), {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.tableData = ITunesJson.iTunesWithJSON(ary)
             self.appsTableView!.reloadData()
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false

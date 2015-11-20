@@ -86,14 +86,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LlQ-dQ-You">
-                                <rect key="frame" x="30" y="143" width="150" height="150"/>
+                                <rect key="frame" x="225" y="143" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="Dr1-Ry-Zgm"/>
                                     <constraint firstAttribute="height" constant="150" id="thh-Sv-Kg5"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="hello world" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="upS-ax-WRB">
-                                <rect key="frame" x="60" y="74" width="490" height="40"/>
+                                <rect key="frame" x="258.5" y="74" width="83" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Dia-3m-XRg"/>
                                 </constraints>
@@ -101,30 +101,28 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="hello" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="UBp-OX-lM3">
-                                <rect key="frame" x="195" y="143" width="385" height="437"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3ZX-EU-hlb">
+                                <rect key="frame" x="20" y="301" width="560" height="299"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="UBp-OX-lM3" firstAttribute="leading" secondItem="LlQ-dQ-You" secondAttribute="trailing" constant="15" id="1a4-lc-dn1"/>
                             <constraint firstItem="upS-ax-WRB" firstAttribute="top" secondItem="rii-n8-evI" secondAttribute="bottom" constant="10" id="4FE-HV-HXT"/>
                             <constraint firstItem="LlQ-dQ-You" firstAttribute="top" secondItem="upS-ax-WRB" secondAttribute="bottom" constant="29" id="7ei-RD-Y8c"/>
-                            <constraint firstItem="upS-ax-WRB" firstAttribute="trailing" secondItem="xvv-7J-e9Y" secondAttribute="trailingMargin" constant="-30" id="EJH-OF-Ire"/>
-                            <constraint firstItem="UBp-OX-lM3" firstAttribute="trailing" secondItem="xvv-7J-e9Y" secondAttribute="trailingMargin" id="Rnp-NQ-cOt"/>
-                            <constraint firstItem="upS-ax-WRB" firstAttribute="leading" secondItem="xvv-7J-e9Y" secondAttribute="leadingMargin" constant="40" id="UVJ-D7-vGh"/>
-                            <constraint firstItem="ZqE-kX-1Nn" firstAttribute="top" secondItem="UBp-OX-lM3" secondAttribute="bottom" constant="20" id="Y7G-wo-6Vj"/>
-                            <constraint firstItem="UBp-OX-lM3" firstAttribute="top" secondItem="upS-ax-WRB" secondAttribute="bottom" constant="29" id="hQD-LR-0BV"/>
-                            <constraint firstItem="LlQ-dQ-You" firstAttribute="leading" secondItem="xvv-7J-e9Y" secondAttribute="leadingMargin" constant="10" id="ntt-XB-ENK"/>
+                            <constraint firstItem="upS-ax-WRB" firstAttribute="centerX" secondItem="xvv-7J-e9Y" secondAttribute="centerX" id="99n-cc-pma"/>
+                            <constraint firstItem="3ZX-EU-hlb" firstAttribute="centerX" secondItem="xvv-7J-e9Y" secondAttribute="centerX" id="HcQ-UU-Vzn"/>
+                            <constraint firstItem="LlQ-dQ-You" firstAttribute="centerX" secondItem="xvv-7J-e9Y" secondAttribute="centerX" id="QHb-u2-OTT"/>
+                            <constraint firstItem="3ZX-EU-hlb" firstAttribute="trailing" secondItem="xvv-7J-e9Y" secondAttribute="trailingMargin" id="YrU-tt-EaN"/>
+                            <constraint firstItem="3ZX-EU-hlb" firstAttribute="top" secondItem="LlQ-dQ-You" secondAttribute="bottom" constant="8" id="eqF-la-kHn"/>
+                            <constraint firstItem="ZqE-kX-1Nn" firstAttribute="top" secondItem="3ZX-EU-hlb" secondAttribute="bottom" id="gtS-oi-Fx9"/>
+                            <constraint firstItem="3ZX-EU-hlb" firstAttribute="leading" secondItem="xvv-7J-e9Y" secondAttribute="leadingMargin" id="i0u-8A-NhV"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="coverImage" destination="LlQ-dQ-You" id="Sw5-fz-577"/>
-                        <outlet property="descriptText" destination="UBp-OX-lM3" id="u31-WF-fPJ"/>
                         <outlet property="titleLabel" destination="upS-ax-WRB" id="K8F-b9-sLf"/>
+                        <outlet property="tracksTable" destination="3ZX-EU-hlb" id="aLU-yI-fIX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6iS-TL-Dwg" userLabel="First Responder" sceneMemberID="firstResponder"/>
