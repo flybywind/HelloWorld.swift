@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MediaPlayer
 
 class DetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, APIControllerProtocol {
     // MARK: outlet
@@ -17,6 +18,9 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: properties
     var json: ITunesJson?
     var tracks = [Track]()
+    var mediaPlayer = MPMoviePlayerController()
+    var backgroundQueue: dispatch_queue_t?
+    var tabedIdx : NSIndexPath?
     // 和SearchResultsViewController类似，这里也是为了防止循环依赖，因为viewcontroller需要api对象，
     // 但是，api对象的初始化又需要view controller作为其delegate传入。
 //    lazy var api = APIControler(delegate: self)
@@ -59,6 +63,36 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(tableView: UITableView,
         numberOfRowsInSection section: Int) -> Int {
         return tracks.count
+    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+        if (backgroundQueue == nil) {
+            // 必须防止main queue里面，放在其他队列中没声音
+            backgroundQueue = dispatch_get_main_queue()
+        }
+        dispatch_async(backgroundQueue!, {
+            self.mediaPlayer.stop()
+        })
+
+        var curIndx : NSIndexPath?
+        if (tabedIdx == nil || tabedIdx!.row != indexPath.row) {
+            let track = tracks[indexPath.row]
+            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? TrackCell {
+                cell.playIcon.text = "🔳"
+            }
+            dispatch_async(backgroundQueue!, {
+                self.mediaPlayer.contentURL = NSURL(string: track.previewUrl)
+                self.mediaPlayer.play()
+            })
+            
+            curIndx = indexPath
+        }
+        // reset other playing button
+        if tabedIdx != nil {
+            if let cell = tableView.cellForRowAtIndexPath(tabedIdx!) as? TrackCell {
+                cell.playIcon.text = "▶️"
+            }
+        }
+        tabedIdx = curIndx
     }
     func didReceiveData(ary: NSArray) {
         dispatch_async(dispatch_get_main_queue(), {
