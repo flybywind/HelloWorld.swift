@@ -17,6 +17,7 @@
 		4019C5C31BFD8FC40076E33A /* ITunesJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4019C5C21BFD8FC40076E33A /* ITunesJson.swift */; };
 		4019C5C51BFDA4230076E33A /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4019C5C41BFDA4230076E33A /* DetailsViewController.swift */; };
 		4019C5C71BFEEE760076E33A /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4019C5C61BFEEE760076E33A /* Track.swift */; };
+		407505BA1BFF05E900D3B619 /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407505B91BFF05E900D3B619 /* TrackCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		4019C5C21BFD8FC40076E33A /* ITunesJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITunesJson.swift; sourceTree = "<group>"; };
 		4019C5C41BFDA4230076E33A /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		4019C5C61BFEEE760076E33A /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		407505B91BFF05E900D3B619 /* TrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				4019C5A21BF9C8070076E33A /* SearchResultsViewController.swift */,
 				4019C5C41BFDA4230076E33A /* DetailsViewController.swift */,
 				4019C5C61BFEEE760076E33A /* Track.swift */,
+				407505B91BFF05E900D3B619 /* TrackCell.swift */,
 				4019C5C21BFD8FC40076E33A /* ITunesJson.swift */,
 				4019C5C01BFC743D0076E33A /* APIController.swift */,
 				4019C5A41BF9C8070076E33A /* Main.storyboard */,
@@ -209,6 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				407505BA1BFF05E900D3B619 /* TrackCell.swift in Sources */,
 				4019C5A31BF9C8070076E33A /* SearchResultsViewController.swift in Sources */,
 				4019C5C31BFD8FC40076E33A /* ITunesJson.swift in Sources */,
 				4019C5A11BF9C8070076E33A /* AppDelegate.swift in Sources */,
@@ -404,6 +408,7 @@
 				4019C5BC1BF9C8080076E33A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4019C5BD1BF9C8080076E33A /* Build configuration list for PBXNativeTarget "HelloWorldTests" */ = {
 			isa = XCConfigurationList;
@@ -412,6 +417,7 @@
 				4019C5BF1BF9C8080076E33A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

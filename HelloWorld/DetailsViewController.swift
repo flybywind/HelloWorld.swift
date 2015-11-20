@@ -8,20 +8,19 @@
 
 import UIKit
 
-class DetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class DetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, APIControllerProtocol {
     // MARK: outlet
     @IBOutlet weak var coverImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    
     @IBOutlet weak var tracksTable: UITableView!
-    
+
     // MARK: properties
     var json: ITunesJson?
     var tracks = [Track]()
     // 和SearchResultsViewController类似，这里也是为了防止循环依赖，因为viewcontroller需要api对象，
     // 但是，api对象的初始化又需要view controller作为其delegate传入。
-    lazy var api = APIControler(delegate: self)
-
+//    lazy var api = APIControler(delegate: self)
+    var api : APIControler!
     // MARK:  required
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -30,8 +29,11 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         if json != nil {
+            api = APIControler(delegate: self)
             // Load in tracks
             api.lookupAlbum(self.json!.collectionId)
+        } else {
+            print("content is empty")
         }
         titleLabel.text = json?.title
         if let imagUrl = json?.largeImageURL {
@@ -48,15 +50,19 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: protocol
     func tableView(tableView: UITableView,
         cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return UITableViewCell()
+            let cell = tableView.dequeueReusableCellWithIdentifier("TrackCell") as! TrackCell
+            let track = tracks[indexPath.row]
+            cell.titleLabel.text = track.title
+            cell.playIcon.text = "▶️"
+            return cell
     }
     func tableView(tableView: UITableView,
         numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return tracks.count
     }
-    func didReceiveAPIResults(results: NSArray) {
+    func didReceiveData(ary: NSArray) {
         dispatch_async(dispatch_get_main_queue(), {
-            self.tracks = ITunesJson.tracksWithJSON(results)
+            self.tracks = Track.tracksWithJSON(ary)
             self.tracksTable.reloadData()
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         })
